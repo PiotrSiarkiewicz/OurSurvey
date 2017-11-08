@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body class="gray-bg jumbotron vertical-center">
+    <div class="text-center  container container-table ">
+        <div class="col-md-6 col-md-offset-3 well well-lg row form-group">
+            <h2>Welcome to OurSurvey!</h2><br><br>
+            <div class="col-md-6">
+                <form th:action="@{/login}" method="get">
+                    <input type="submit" value="Sign In" class="btn btn-primary"/>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form th:action="@{/register}" method="get">
+                    <input type="submit" value="Register" class="btn btn-primary"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
