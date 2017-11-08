@@ -20,14 +20,21 @@ import java.util.*;
 @Controller
 public class SurveyController
 {
-    @Autowired
-    UserRepository userRepository;
+
+    private UserRepository userRepository;
+    private SurveyRepository surveyRepository;
+
 
     @Autowired
-    SurveyRepository surveyRepository;
+    SurveyController( UserRepository userRepository, SurveyRepository surveyRepository )
+    {
+        this.surveyRepository = surveyRepository;
+        this.userRepository = userRepository;
+    }
+
 
     @RequestMapping( value = "/surveys", method = RequestMethod.GET )
-    public String main( Model model)
+    public String main( Model model )
     {
         List<Survey> surveys = getSurveysFromLoggedUser();
 
@@ -35,23 +42,24 @@ public class SurveyController
         return "surveys";
     }
 
-    @RequestMapping(value = "/surveys/delete/{surveyId}")
-    public ModelAndView delete ( @PathVariable Long surveyId )
+
+    @RequestMapping( value = "/surveys/delete/{surveyId}" )
+    public ModelAndView delete( @PathVariable Long surveyId )
     {
         removeSurveyFromSurveyList( surveyId );
         surveyRepository.delete( surveyId );
 
-        return new ModelAndView("redirect:/surveys");
+        return new ModelAndView( "redirect:/surveys" );
     }
 
 
     private void removeSurveyFromSurveyList( @PathVariable Long surveyId )
     {
         List<Survey> surveys = getSurveysFromLoggedUser();
-        for ( Iterator<Survey> iterator = surveys.iterator(); iterator.hasNext();)
+        for( Iterator<Survey> iterator = surveys.iterator(); iterator.hasNext(); )
         {
             Survey survey = iterator.next();
-            if (survey.getId().equals( surveyId ))
+            if( survey.getId().equals( surveyId ) )
             {
                 iterator.remove();
             }

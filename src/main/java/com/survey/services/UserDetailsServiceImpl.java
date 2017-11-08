@@ -16,12 +16,13 @@ import java.util.Optional;
 public class UserDetailsServiceImpl
                 implements UserDetailsService
 {
-    @Autowired
+
     private UserRepository userRepository;
 
 
     @Autowired
-    public UserDetailsServiceImpl( UserRepository userRepository )
+    public UserDetailsServiceImpl( UserRepository userRepository)
+
     {
         this.userRepository = userRepository;
     }

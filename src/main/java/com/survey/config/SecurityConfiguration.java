@@ -20,8 +20,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration
                 extends WebSecurityConfigurerAdapter
 {
+    private UserDetailsServiceImpl userDetailsService;
+
+
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    public SecurityConfiguration( UserDetailsServiceImpl userDetailsService )
+    {
+        this.userDetailsService = userDetailsService;
+    }
 
 
     @Bean
@@ -44,10 +50,10 @@ public class SecurityConfiguration
     protected void configure( HttpSecurity http ) throws Exception
     {
         http.authorizeRequests()
-                        .antMatchers( "/register", "/home", "/login", "/", "/confirm").permitAll()
+                        .antMatchers( "/register", "/home", "/login", "/", "/confirm" ).permitAll()
                         .anyRequest().authenticated()
                         .and()
-                    .formLogin()
+                        .formLogin()
                         .loginPage( "/login" )
                         .defaultSuccessUrl( "/surveys" );
     }

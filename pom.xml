@@ -7,7 +7,6 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <username>MySurveyApp</username>
   <url>http://maven.apache.org</url>
 
 
