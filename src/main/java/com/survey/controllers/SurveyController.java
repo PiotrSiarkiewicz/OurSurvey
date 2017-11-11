@@ -1,8 +1,6 @@
 package com.survey.controllers;
 
-import com.survey.models.Survey;
-import com.survey.models.User;
-import com.survey.models.UserDetailsImpl;
+import com.survey.models.*;
 import com.survey.repository.SurveyRepository;
 import com.survey.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,17 +51,31 @@ public class SurveyController
     }
 
 
-    private void removeSurveyFromSurveyList( @PathVariable Long surveyId )
+    @RequestMapping( value = "/surveys/fill/{surveyId}" )
+    public ModelAndView fill( @PathVariable Long surveyId, Model model )
     {
+        String title;
         List<Survey> surveys = getSurveysFromLoggedUser();
         for( Iterator<Survey> iterator = surveys.iterator(); iterator.hasNext(); )
         {
             Survey survey = iterator.next();
             if( survey.getId().equals( surveyId ) )
             {
-                iterator.remove();
+                List<Question> questions = survey.getQuestions();
+                title = survey.getName();
+                model.addAttribute( "questions", questions );
+                model.addAttribute( "title", title );
             }
         }
+
+        return new ModelAndView( "fill" );
+    }
+
+
+    private void removeSurveyFromSurveyList( @PathVariable Long surveyId )
+    {
+        List<Survey> surveys = getSurveysFromLoggedUser();
+        surveys.removeIf( survey -> survey.getId().equals( surveyId ) );
     }
 
 

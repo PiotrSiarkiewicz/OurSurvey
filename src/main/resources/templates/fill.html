@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="gray-bg jumbotron">
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out" class="btn btn-primary pull-right"/>
+</form>
+<div class="vertical-center">
+    <div class="middle-box  container container-table ">
+        <div class="col-md-12  well well-lg">
+            <h2 class="text-center" th:text="${title}"></h2>
+
+            <ol class="rectangle-list">
+                <div th:each="question : ${questions}">
+                    <li  th:text="${question.text}"></li>
+                    <ol>
+                        <div th:each="answer : ${question.answers}">
+                            <input th:if="${answer.type} == 'checkbox'" type="checkbox" th:name="${question.id}">
+                            <input th:if="${answer.type} == 'radio'" type="radio" th:name="${question.id}">
+                            <li  th:text="${answer.text}"></li>
+                            <input th:if="${answer.type} == 'text'" type="text" th:name="${question.id}">
+                        </div>
+                    </ol>
+                </div>
+            </ol>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

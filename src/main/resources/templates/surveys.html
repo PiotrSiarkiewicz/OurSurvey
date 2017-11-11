@@ -17,6 +17,9 @@
     <div class="middle-box text-center container container-table ">
         <div class="col-md-12  well well-lg">
             <h2>Documents</h2>
+            <form action="/surveys/create" th:action="@{/surveys/create}"  method="get" class="btn-group pull-right">
+                <input type="submit" class="btn btn-success btn-block" value="Create" name="surveyId" th:/>
+            </form>
                 <table class="table">
                     <tr>
                         <td>Title</td>
@@ -25,25 +28,25 @@
                     </tr>
                     <tr th:each="survey : ${surveys}">
                         <td>
-                            <a th:text="${survey.name}"></a>
+                            <p th:text="${survey.name}"></p>
                         </td>
                         <td>
-                            <a th:text="${survey.description}"></a>
+                            <p th:text="${survey.description}"></p>
                         </td>
                         <td class="input-group pull-right">
-                            <form action="/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post" class="btn-group">
-                                <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId" th:/>
+                            <form action="/surveys/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post" class="btn-group">
+                                <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"/>
                             </form>
-                            <form action="/delete" th:action="@{/surveys/edit/} + ${survey.id}"  method="post" >
+                            <form action="/surveys/delete" th:action="@{/surveys/edit/} + ${survey.id}"  method="post" >
                                 <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"/>
                             </form>
-                            <form action="/delete" th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
+                            <form action="/surveys/fill" th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-primary btn-block" value="fill" name="surveyId"/>
                             </form>
-                            <form action="/delete" th:action="@{/surveys/share/} + ${survey.id}"  method="post">
+                            <form action="/surveys/delete" th:action="@{/surveys/share/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-info btn-block" value="share" name="surveyId"/>
                             </form>
-                            <form action="/delete" th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
+                            <form action="/surveys/delete" th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-danger btn-block" value="delete" name="surveyId"/>
                             </form>
 

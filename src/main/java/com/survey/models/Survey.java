@@ -5,14 +5,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
 @Table( name = "survey" )
 public class Survey
 {
-    @Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "survey_id" ) @NotEmpty
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    @Column( name = "survey_id" )
+    @NotEmpty
     private Long id;
     private String name;
     private String description;
@@ -21,6 +23,21 @@ public class Survey
     private Date creationDate;
     @ManyToMany( mappedBy = "surveys" )
     private List<User> users;
+
+    @OneToMany( targetEntity = Question.class, mappedBy = "survey")
+    private List<Question> questions;
+
+
+    public List<Question> getQuestions()
+    {
+        return questions;
+    }
+
+
+    public void setQuestions( List<Question> questions )
+    {
+        this.questions = questions;
+    }
 
 
     public List<User> getUsers()
