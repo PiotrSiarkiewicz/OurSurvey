@@ -32,11 +32,12 @@ public class SurveyController
 
 
     @RequestMapping( value = "/surveys", method = RequestMethod.GET )
-    public String main( Model model )
+    public String main( Model model, Survey survey )
     {
         List<Survey> surveys = getSurveysFromLoggedUser();
 
         model.addAttribute( "surveys", surveys );
+        model.addAttribute( "survey", survey );
         return "surveys";
     }
 
@@ -54,23 +55,32 @@ public class SurveyController
     @RequestMapping( value = "/surveys/fill/{surveyId}" )
     public ModelAndView fill( @PathVariable Long surveyId, Model model )
     {
-        String title;
+        findSurveyById( surveyId, model );
+
+        return new ModelAndView( "fill" );
+    }
+
+
+    @RequestMapping( value = "/surveys/edit/{surveyId}", method = RequestMethod.GET )
+    public ModelAndView edit(@PathVariable Long surveyId, Model model)
+    {
+        findSurveyById( surveyId, model );
+        return new ModelAndView( "edit" );
+    }
+
+
+    private void findSurveyById( @PathVariable Long surveyId, Model model )
+    {
         List<Survey> surveys = getSurveysFromLoggedUser();
         for( Iterator<Survey> iterator = surveys.iterator(); iterator.hasNext(); )
         {
             Survey survey = iterator.next();
             if( survey.getId().equals( surveyId ) )
             {
-                List<Question> questions = survey.getQuestions();
-                title = survey.getName();
-                model.addAttribute( "questions", questions );
-                model.addAttribute( "title", title );
+                model.addAttribute( "survey", survey );
             }
         }
-
-        return new ModelAndView( "fill" );
     }
-
 
     private void removeSurveyFromSurveyList( @PathVariable Long surveyId )
     {

@@ -16,10 +16,10 @@
 <div class="vertical-center">
     <div class="middle-box  container container-table ">
         <div class="col-md-12  well well-lg">
-            <h2 class="text-center" th:text="${title}"></h2>
+            <h2 class="text-center" th:text="${survey.name}"></h2>
 
             <ol class="rectangle-list">
-                <div th:each="question : ${questions}">
+                <div th:each="question : ${survey.questions}">
                     <li  th:text="${question.text}"></li>
                     <ol>
                         <div th:each="answer : ${question.answers}">

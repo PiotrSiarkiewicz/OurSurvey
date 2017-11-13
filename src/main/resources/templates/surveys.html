@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home</title>
+    <script src="js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="css/jquery_popup.css" />
+    <script src="js/jquery_popup.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -17,13 +20,12 @@
     <div class="middle-box text-center container container-table ">
         <div class="col-md-12  well well-lg">
             <h2>Documents</h2>
-            <form action="/surveys/create" th:action="@{/surveys/create}"  method="get" class="btn-group pull-right">
-                <input type="submit" class="btn btn-success btn-block" value="Create" name="surveyId" th:/>
-            </form>
+            <button id="onclick" class="pull-right btn btn-success">Create New Document</button>
                 <table class="table">
                     <tr>
                         <td>Title</td>
                         <td>Description</td>
+                        <td>Creation Date</td>
                         <th>&nbsp;</th>
                     </tr>
                     <tr th:each="survey : ${surveys}">
@@ -33,11 +35,14 @@
                         <td>
                             <p th:text="${survey.description}"></p>
                         </td>
+                        <td>
+                            <p th:text="${survey.creationDate}"></p>
+                        </td>
                         <td class="input-group pull-right">
                             <form action="/surveys/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post" class="btn-group">
                                 <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"/>
                             </form>
-                            <form action="/surveys/delete" th:action="@{/surveys/edit/} + ${survey.id}"  method="post" >
+                            <form  th:action="@{/surveys/edit/} + ${survey.id}"  method="post" >
                                 <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"/>
                             </form>
                             <form action="/surveys/fill" th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
@@ -49,13 +54,33 @@
                             <form action="/surveys/delete" th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-danger btn-block" value="delete" name="surveyId"/>
                             </form>
-
                         </td>
                     </tr>
                 </table>
             </div>
-
-        </div>
+            <div id="contactdiv">
+                <form class="form" th:action="@{/surveys/create}" th:object="${survey}" method="post" id="contact">
+                    <div>
+                        <label>Title:</label>
+                        <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="Name"/><br/>
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <input class="form-control" type="text" id="desc" th:name="description" placeholder="Description"/>
+                    </div>
+                    <br>
+                    <div>
+                        <input class="btn btn-success" type="submit" id="create" value="Create"/>
+                        <input class="btn btn-warning" type="button" id="cancel" value="Cancel"/>
+                    </div>
+                </form>
+            </div>
     </div>
+</div>
 </body>
+<script>
+    $("#onclick").click(function() {
+        $("#contactdiv").css("display", "block");
+    });
+</script>
 </html>

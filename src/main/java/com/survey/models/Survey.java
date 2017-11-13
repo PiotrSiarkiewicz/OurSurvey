@@ -14,17 +14,16 @@ public class Survey
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     @Column( name = "survey_id" )
-    @NotEmpty
     private Long id;
     private String name;
     private String description;
     private Boolean editable;
-    @Column( name = "creation_date" )
+
+    @Column( name = "creation_date", insertable = false)
     private Date creationDate;
     @ManyToMany( mappedBy = "surveys" )
     private List<User> users;
-
-    @OneToMany( targetEntity = Question.class, mappedBy = "survey")
+    @OneToMany( targetEntity = Question.class, mappedBy = "survey" )
     private List<Question> questions;
 
 
