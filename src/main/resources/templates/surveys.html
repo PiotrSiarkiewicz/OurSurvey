@@ -4,11 +4,11 @@
     <meta charset="UTF-8"/>
     <title>Home</title>
     <script src="js/jquery-3.2.1.js"></script>
-    <link rel="stylesheet" href="css/jquery_popup.css" />
     <script src="js/jquery_popup.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet"/>
+    <link rel="stylesheet" href="css/jquery_popup.css" />
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -39,10 +39,10 @@
                             <p th:text="${survey.creationDate}"></p>
                         </td>
                         <td class="input-group pull-right">
-                            <form action="/surveys/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post" class="btn-group">
+                            <form action="/surveys/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"/>
                             </form>
-                            <form  th:action="@{/surveys/edit/} + ${survey.id}"  method="post" >
+                            <form  th:action="@{/surveys/edit/} + ${survey.id}"  method="get" >
                                 <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"/>
                             </form>
                             <form action="/surveys/fill" th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
@@ -58,8 +58,8 @@
                     </tr>
                 </table>
             </div>
-            <div id="contactdiv">
-                <form class="form" th:action="@{/surveys/create}" th:object="${survey}" method="post" id="contact">
+            <div id="contactdiv" >
+                <form class="form"   th:action="@{/surveys/create}" th:object="${survey}" method="post" id="contact">
                     <div>
                         <label>Title:</label>
                         <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="Name"/><br/>
@@ -81,6 +81,7 @@
 <script>
     $("#onclick").click(function() {
         $("#contactdiv").css("display", "block");
+        $("#contact").css("display", "block");
     });
 </script>
 </html>

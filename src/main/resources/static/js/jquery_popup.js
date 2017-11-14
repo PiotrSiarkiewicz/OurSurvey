@@ -5,6 +5,9 @@ $("#onclick").click(function() {
 $("#contact #cancel").click(function() {
     $(this).parent().parent().hide();
 });
+    $("#name").click(function() {
+        $(this).parent().parent().hide();
+    });
 // Contact form popup send-button click event.
 $("#create").click(function() {
     var name = $("#name").val();

@@ -11,7 +11,6 @@ public class Answer
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     @Column( name = "answer_id" )
-    @NotEmpty
     private Long id;
     private String text;
     private String type;

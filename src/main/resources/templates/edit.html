@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    rel="stylesheet"/>
+    <script src="js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="css/jquery_popup.css" />
+    <script src="js/jquery_popup.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="gray-bg jumbotron">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="btn btn-primary pull-right"/>
+    </form>
+    <div class="vertical-center">
+        <div class="middle-box  container container-table ">
+            <div class="col-md-12  well well-lg">
+                <h2 class="text-center" th:text="${survey.name}"></h2>
+                <ol class="rectangle-list">
+                    <div th:each="question : ${survey.questions}">
+                        <li  th:text="${question.text}"></li>
+                        <form th:action="@{/surveys/edit/deletequestion/} + ${question.id}"  method="post" >
+                            <input type="submit" class="btn btn-danger btn-block" value="delete" name="questionId"/>
+                        </form>
+                        <ol>
+                            <div th:each="answer : ${question.answers}">
+                                <li  th:text="${answer.text}"></li>
+                                <form th:action="@{/surveys/edit/deleteanswer/} + ${answer.id}"  method="post" >
+                                    <input type="submit" class="btn btn-danger btn-block" value="delete" name="answerId"/>
+                                </form>
+                            </div>
+                        </ol>
+                        <form th:action="@{/surveys/edit/addanswer/} + ${question.id}" th:object="${addanswer}" method="post" >
+                            <div class="input-group col-md-6">
+                                <input type="text" class="selectpicker form-control" placeholder="Answer" th:field="*{text}">
+
+                                <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+
+                                <select th:field="*{type}" class="form-control">
+                                    <option value="text">Text</option>
+                                    <option value="checkbox">Checkbox</option>
+                                    <option value="radio">Radio</option>
+                                    <option value="image">Image</option>
+                                </select>
+                                <span class="input-group-btn">
+                                     <input type="submit" class="btn btn-success pull-left" value="Add Answer" name="questionId"/>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </ol>
+                <form th:action="@{/surveys/edit/addquestion/}"  th:object="${addquestion}" method="post" >
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Question" th:field="*{text}">
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-success" value="Add Question" name="surveyId"/>
+                        </span>
+                    </div>
+                </form>
+                <form th:action="@{/surveys}"  method="get" >
+                     <input type="submit" class="btn btn-primary btn-block text-center" value="Finish"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

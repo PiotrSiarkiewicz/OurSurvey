@@ -19,6 +19,9 @@ form {
     text-decoration: none;
     transition: all .3s ease-out;
 }
+.inline-block{
+    display: inline-block;
+}
 
 .rectangle-list a:hover{
     background: #eee;
