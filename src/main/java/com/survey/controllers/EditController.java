@@ -5,8 +5,6 @@ import com.survey.models.Question;
 import com.survey.models.Survey;
 import com.survey.repository.AnswerRepository;
 import com.survey.repository.QuestionRepository;
-import com.survey.repository.SurveyRepository;
-import com.survey.repository.UserRepository;
 import com.survey.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

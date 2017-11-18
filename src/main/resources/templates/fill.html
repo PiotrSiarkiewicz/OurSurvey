@@ -5,7 +5,7 @@
     <title>Home</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -19,21 +19,114 @@
             <h2 class="text-center" th:text="${survey.name}"></h2>
 
             <ol class="rectangle-list">
-                <div th:each="question : ${survey.questions}">
-                    <li  th:text="${question.text}"></li>
+                <div th:each="question : ${survey.questions}" >
+                    <li th:text="${question.text}"></li>
                     <ol>
                         <div th:each="answer : ${question.answers}">
-                            <input th:if="${answer.type} == 'checkbox'" type="checkbox" th:name="${question.id}">
-                            <input th:if="${answer.type} == 'radio'" type="radio" th:name="${question.id}">
-                            <li  th:text="${answer.text}"></li>
-                            <input th:if="${answer.type} == 'text'" type="text" th:name="${question.id}">
+                            <input th:if="${answer.type} == 'checkbox'" type="checkbox" th:id="${answer.id}"
+                                   class="checkbox">
+                            <input th:if="${answer.type} == 'radio'" type="radio" th:name="${question.id}" th:id="${answer.id}" class="radio">
+                            <li th:text="${answer.text}" th:class="${answer.id}"></li>
+                            <input th:if="${answer.type} == 'text'" type="text" th:id="${answer.id}" class="text">
+                            <label class="custom-file" th:if="${answer.type} == 'image'" >
+                                <input type="file" th:id="${answer.id}" class="image" >
+                                <span class="custom-file-control"></span>
+                            </label>
                         </div>
                     </ol>
                 </div>
             </ol>
+
+            <form th:action="@{/surveys}" method="get">
+                <input type="submit" value="Save" class="btn btn-primary pull-right" id="onclick"/>
+             </form>
         </div>
 
     </div>
 </div>
+<script type="application/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
+<script type="application/javascript" th:src="@{/js/fill_survey.js}"></script>
 </body>
+<script th:inline="javascript" type="application/javascript">
+    $(document).ready(function () {
+        /*<![CDATA[*/
+        var results = [[${results}]];
+        /*]]>*/
+
+        $(".checkbox").click(function () {
+            var id = $(this).attr("id");
+            var value = $("."+id).text();
+            debugger;
+            for(var i = 0; i< results.length; i++)
+            {
+                if(results[i].answerId == id)
+                {
+                    results[i].text = value;
+                }
+            }
+        })
+
+        $(".radio").click(function () {
+            var id = $(this).attr("id");
+            var value = $("."+id).text();
+            var idq =  $(this).attr("name");
+            debugger;
+            for(var j = 0; j< results.length; j++)
+            {
+                if(results[j].questionId == idq)
+                {
+                    results[j].text = false;
+                }
+            }
+            for(var i = 0; i< results.length; i++)
+            {
+                if(results[i].answerId == id)
+                {
+                    results[i].text = value;
+                }
+            }
+        })
+
+        $(".text").change(function () {
+            var value = $(this).val();
+            var id = $(this).attr("id");
+            debugger;
+            for(var i = 0; i< results.length; i++)
+            {
+                if(results[i].answerId == id)
+                {
+                    results[i].text = value;
+                }
+            }
+        })
+
+        $(".image").change(function () {
+            var id = $(this).attr("id");
+            var file = new FormData;
+            file.append("file", $(this)[0].files[0]);
+            $.ajax({
+                url : "/surveys/fill/upload_image/"+id,
+                data: file,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
+                type: 'POST',
+            });
+
+
+        })
+        $("#onclick").click(function() {
+            debugger;
+            $.ajax({
+                url : "/surveys/fill/results",
+                type : "post",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(results),
+            });
+        });
+    });
+
+</script>
 </html>

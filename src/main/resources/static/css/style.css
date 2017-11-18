@@ -8,6 +8,15 @@
 form {
     display: inline-block;
 }
+
+.radio
+ {
+     display: inline;
+ }
+.checkbox
+{
+    display: inline;
+}
 .rectangle-list li{
     position: relative;
     display: inline-block;

@@ -3,6 +3,7 @@ package com.survey.models;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -18,7 +19,6 @@ public class Answer
     @ManyToOne
     @JoinColumn (name = "question_id")
     private Question question;
-
 
     public Long getId()
     {

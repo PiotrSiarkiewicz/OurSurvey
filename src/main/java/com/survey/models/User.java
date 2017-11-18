@@ -26,9 +26,34 @@ public class User
     @Column( name = "confirmation_token" )
     private String confirmationToken;
     private boolean enabled;
-
     @ManyToMany @JoinTable( name = "access", joinColumns = @JoinColumn( name = "user_id" ), inverseJoinColumns = @JoinColumn( name = "survey_id" ) )
     private List<Survey> surveys;
+    @OneToMany( targetEntity = Result.class, mappedBy = "user" )
+    private List<Result> results;
+
+
+    public void setUsername( String username )
+    {
+        this.username = username;
+    }
+
+
+    public boolean isEnabled()
+    {
+        return enabled;
+    }
+
+
+    public List<Result> getResults()
+    {
+        return results;
+    }
+
+
+    public void setResults( List<Result> results )
+    {
+        this.results = results;
+    }
 
 
     public List<Survey> getSurveys()

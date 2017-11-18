@@ -25,11 +25,24 @@ public class Survey
     private List<User> users;
     @OneToMany( targetEntity = Question.class, mappedBy = "survey" )
     private List<Question> questions;
-
+    @OneToMany( targetEntity = Result.class, mappedBy = "survey" )
+    private List<Result> results;
 
     public List<Question> getQuestions()
     {
         return questions;
+    }
+
+
+    public List<Result> getResults()
+    {
+        return results;
+    }
+
+
+    public void setResults( List<Result> results )
+    {
+        this.results = results;
     }
 
 

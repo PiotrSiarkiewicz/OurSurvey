@@ -39,19 +39,19 @@
                             <p th:text="${survey.creationDate}"></p>
                         </td>
                         <td class="input-group pull-right">
-                            <form action="/surveys/delete" th:action="@{/surveys/results/} + ${survey.id}"  method="post">
+                            <form th:action="@{/surveys/results/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"/>
                             </form>
                             <form  th:action="@{/surveys/edit/} + ${survey.id}"  method="get" >
                                 <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"/>
                             </form>
-                            <form action="/surveys/fill" th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
+                            <form th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-primary btn-block" value="fill" name="surveyId"/>
                             </form>
-                            <form action="/surveys/delete" th:action="@{/surveys/share/} + ${survey.id}"  method="post">
+                            <form th:action="@{/surveys/share/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-info btn-block" value="share" name="surveyId"/>
                             </form>
-                            <form action="/surveys/delete" th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
+                            <form th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
                                 <input type="submit" class="btn btn-danger btn-block" value="delete" name="surveyId"/>
                             </form>
                         </td>
@@ -80,7 +80,6 @@
 </body>
 <script>
     $("#onclick").click(function() {
-        $("#contactdiv").css("display", "block");
         $("#contact").css("display", "block");
     });
 </script>
