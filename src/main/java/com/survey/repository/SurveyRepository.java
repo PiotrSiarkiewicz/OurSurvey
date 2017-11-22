@@ -11,5 +11,5 @@ import java.util.List;
 public interface SurveyRepository
                 extends JpaRepository<Survey, Long>
 {
-
+    Survey findSurveyById( Long surveyId );
 }

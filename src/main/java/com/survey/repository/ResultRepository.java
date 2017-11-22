@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ResultRepository
                 extends JpaRepository<Result, Long>
 {
+    Result findResultById(Long id);
 }

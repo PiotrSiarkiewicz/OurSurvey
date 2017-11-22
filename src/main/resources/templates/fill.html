@@ -103,6 +103,13 @@
         $(".image").change(function () {
             var id = $(this).attr("id");
             var file = new FormData;
+            for(var i = 0; i< results.length; i++)
+            {
+                if(results[i].answerId == id)
+                {
+                    results[i].text = "image";
+                }
+            }
             file.append("file", $(this)[0].files[0]);
             $.ajax({
                 url : "/surveys/fill/upload_image/"+id,
@@ -127,6 +134,5 @@
             });
         });
     });
-
 </script>
 </html>

@@ -74,7 +74,10 @@ public class FillController
                             result,
                             results[i].getQuestionId()
             );
-            resultDataRepository.save( resulData ) ;
+            if(resulData.getText() != null && !resulData.getText().equals( "false" ) )
+            {
+              resultDataRepository.save( resulData ) ;
+            }
         }
     }
 

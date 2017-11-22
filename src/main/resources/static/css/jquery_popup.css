@@ -20,11 +20,11 @@
     left: 0px;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    /*background-color: rgba(0, 0, 0, 0.6);*/
     display: none;
 }
 
-#login,#contact{
+#contact{
     width:350px;
     margin:0px;
     background-color:white;
@@ -34,6 +34,34 @@
 }
 
 #contact{
+    left: 50%;
+    top: 50%;
+    margin-left:-210px;
+    margin-top:-255px;
+    display: none;
+}
+
+#sharediv{
+    opacity:1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    /*background-color: rgba(0, 0, 0, 0.6);*/
+    display: none;
+}
+
+#share{
+    width:350px;
+    margin:0px;
+    background-color:white;
+    font-family: 'Fauna One', serif;
+    position: relative;
+    border: 5px solid rgb(90, 158, 181);
+}
+
+#share{
     left: 50%;
     top: 50%;
     margin-left:-210px;

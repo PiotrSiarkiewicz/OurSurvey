@@ -1,23 +1,24 @@
 .vertical-center {
-    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100%; /* Fallback for browsers do NOT support vh unit */
     min-height: 100vh; /* These two lines are counted as one :-)       */
 
     display: flex;
     align-items: center;
 }
+
 form {
     display: inline-block;
 }
 
-.radio
- {
-     display: inline;
- }
-.checkbox
-{
+.radio {
     display: inline;
 }
-.rectangle-list li{
+
+.checkbox {
+    display: inline;
+}
+
+.rectangle-list li {
     position: relative;
     display: inline-block;
     padding: .4em .4em .4em .8em;
@@ -28,15 +29,16 @@ form {
     text-decoration: none;
     transition: all .3s ease-out;
 }
-.inline-block{
+
+.inline-block {
     display: inline-block;
 }
 
-.rectangle-list a:hover{
+.rectangle-list a:hover {
     background: #eee;
 }
 
-.rectangle-list li:before{
+.rectangle-list li:before {
     content: counter(li);
     counter-increment: li;
     position: absolute;
@@ -51,7 +53,7 @@ form {
     font-weight: bold;
 }
 
-.rectangle-list li:after{
+.rectangle-list li:after {
     position: absolute;
     content: '';
     border: .5em solid transparent;
@@ -61,7 +63,7 @@ form {
     transition: all .3s ease-out;
 }
 
-.rectangle-list li:hover:after{
+.rectangle-list li:hover:after {
     left: -.5em;
     border-left-color: #3399ff;
 }
@@ -77,4 +79,16 @@ ol {
 ol ol {
     margin: 0 0 0 2em; /* Add some left margin for inner lists */
 
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 15px;
+}
+
+td {
+    padding: 0 15px 0 30px;
+}
+td{
+    font-size: large;
 }

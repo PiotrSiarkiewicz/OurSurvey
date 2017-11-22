@@ -1,6 +1,5 @@
 package com.survey.models;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,13 +16,12 @@ public class Survey
     private Long id;
     private String name;
     private String description;
-    private Boolean editable;
-
+    private String creator;
     @Column( name = "creation_date", insertable = false)
     private Date creationDate;
     @ManyToMany( mappedBy = "surveys" )
     private List<User> users;
-    @OneToMany( targetEntity = Question.class, mappedBy = "survey" )
+    @OneToMany( targetEntity = Question.class, mappedBy = "survey", fetch = FetchType.EAGER)
     private List<Question> questions;
     @OneToMany( targetEntity = Result.class, mappedBy = "survey" )
     private List<Result> results;
@@ -88,15 +86,15 @@ public class Survey
     }
 
 
-    public Boolean getEditable()
+    public String getCreator()
     {
-        return editable;
+        return creator;
     }
 
 
-    public void setEditable( Boolean editable )
+    public void setCreator( String creator )
     {
-        this.editable = editable;
+        this.creator = creator;
     }
 
 

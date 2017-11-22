@@ -20,19 +20,19 @@ public class Result
     @ManyToOne
     @JoinColumn (name = "user_id")
     private User user;
-    @OneToMany( targetEntity = ResultData.class, mappedBy = "result" )
-    private List<ResultData> resultdatas;
+    @OneToMany( targetEntity = ResultData.class, mappedBy = "result")
+    private List<ResultData> resultDatas;
 
 
-    public List<ResultData> getResultdatas()
+    public List<ResultData> getResultDatas()
     {
-        return resultdatas;
+        return resultDatas;
     }
 
 
-    public void setResultdatas( List<ResultData> resultdatas )
+    public void setResultDatas( List<ResultData> resultDatas )
     {
-        this.resultdatas = resultdatas;
+        this.resultDatas = resultDatas;
     }
 
 

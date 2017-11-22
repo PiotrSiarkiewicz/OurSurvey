@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+<div class="gray-bg jumbotron">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out" class="btn btn-primary pull-right"/>
+    </form>
+    <div class="vertical-center">
+        <div class="container container-table">
+            <div class="col-md-12  well well-lg">
+                <h2 class="text-center" th:text= "${'Results for ' + survey.name}"></h2>
+                <table cellspacing="20">
+                    <tr>
+                        <td>Filled By</td>
+                        <td>Creation Date</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr th:each="result : ${survey.results}">
+                        <td>
+                            <p th:text="${result.user.username}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${result.fillDate}"></p>
+                        </td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td class="input-group pull-right">
+                            <form th:action="@{/surveys/results/showdata/} + ${result.id}"  method="get">
+                                <input type="submit" class="btn btn-primary btn-block pull-right" value="show result data"/>
+                            </form>
+                            <form  th:action="@{/surveys/results/delete/} + ${result.id}"  method="post" >
+                                <input type="submit" class="btn btn-danger btn-block pull-right" value="delete"/>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

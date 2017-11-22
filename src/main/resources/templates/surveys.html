@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home</title>
-    <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/jquery_popup.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet"/>
-    <link rel="stylesheet" href="css/jquery_popup.css" />
+    <link rel="stylesheet" href="css/jquery_popup.css"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -20,66 +18,79 @@
     <div class="middle-box text-center container container-table ">
         <div class="col-md-12  well well-lg">
             <h2>Documents</h2>
+            <div th:if="${shared} == 'complete'" class="alert alert-success"
+                 role="alert" th:text="${shareMessage}"></div>
+
+            <div th:if="${shared} == 'error'" class="alert alert-danger"
+                 role="alert" th:text="${shareMessage}"></div>
             <button id="onclick" class="pull-right btn btn-success">Create New Document</button>
-                <table class="table">
-                    <tr>
-                        <td>Title</td>
-                        <td>Description</td>
-                        <td>Creation Date</td>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tr th:each="survey : ${surveys}">
-                        <td>
-                            <p th:text="${survey.name}"></p>
-                        </td>
-                        <td>
-                            <p th:text="${survey.description}"></p>
-                        </td>
-                        <td>
-                            <p th:text="${survey.creationDate}"></p>
-                        </td>
-                        <td class="input-group pull-right">
-                            <form th:action="@{/surveys/results/} + ${survey.id}"  method="post">
-                                <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"/>
-                            </form>
-                            <form  th:action="@{/surveys/edit/} + ${survey.id}"  method="get" >
-                                <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"/>
-                            </form>
-                            <form th:action="@{/surveys/fill/} + ${survey.id}"  method="post">
-                                <input type="submit" class="btn btn-primary btn-block" value="fill" name="surveyId"/>
-                            </form>
-                            <form th:action="@{/surveys/share/} + ${survey.id}"  method="post">
-                                <input type="submit" class="btn btn-info btn-block" value="share" name="surveyId"/>
-                            </form>
-                            <form th:action="@{/surveys/delete/} + ${survey.id}"  method="post">
-                                <input type="submit" class="btn btn-danger btn-block" value="delete" name="surveyId"/>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="contactdiv" >
-                <form class="form"   th:action="@{/surveys/create}" th:object="${survey}" method="post" id="contact">
-                    <div>
-                        <label>Title:</label>
-                        <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="Name"/><br/>
-                    </div>
-                    <div>
-                        <label>Description:</label>
-                        <input class="form-control" type="text" id="desc" th:name="description" placeholder="Description"/>
-                    </div>
-                    <br>
-                    <div>
-                        <input class="btn btn-success" type="submit" id="create" value="Create"/>
-                        <input class="btn btn-warning" type="button" id="cancel" value="Cancel"/>
-                    </div>
-                </form>
-            </div>
+            <table class="table">
+                <tr>
+                    <td>Title</td>
+                    <td>Description</td>
+                    <td>Creation Date</td>
+                    <th>&nbsp;</th>
+                </tr>
+                <tr th:each="survey : ${surveys}">
+                    <td>
+                        <p th:text="${survey.name}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${survey.description}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${survey.creationDate}"></p>
+                    </td>
+                    <td class="input-group pull-right">
+                        <form th:action="@{/surveys/fill/} + ${survey.id}" method="post">
+                            <input type="submit" class="btn btn-primary btn-block" value="fill" name="surveyId"/>
+                        </form>
+                        <form th:action="@{/surveys/results/} + ${survey.id}" method="get">
+                            <input type="submit" class="btn btn-primary btn-block" value="results" name="surveyId"
+                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                        </form>
+                        <form th:action="@{/surveys/edit/} + ${survey.id}" method="get">
+                            <input type="submit" class="btn btn-primary btn-block" value="edit" name="surveyId"
+                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                        </form>
+                        <form th:action="@{/surveys/share/} + ${survey.id}" th:object="${username}" method="post">
+                            <input type="text" class="form-control" th:field="*{username}" name="surveyId"
+                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                            <input type="submit" class="btn btn-info btn-block" value="share"
+                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                        </form>
+                        <form th:action="@{/surveys/delete/} + ${survey.id}" method="post">
+                            <input type="submit" class="btn btn-danger btn-block" value="delete" name="surveyId"
+                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="contactdiv">
+            <form class="form" th:action="@{/surveys/create}" th:object="${survey}" method="post" id="contact">
+                <div>
+                    <label>Title:</label>
+                    <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="Name"/><br/>
+                </div>
+                <div>
+                    <label>Description:</label>
+                    <input class="form-control" type="text" id="desc" th:name="description" placeholder="Description"/>
+                </div>
+                <br>
+                <div>
+                    <input class="btn btn-success" type="submit" id="create" value="Create"/>
+                    <input class="btn btn-warning" type="button" id="cancel" value="Cancel"/>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+<script type="application/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
+<script type="application/javascript" th:src="@{/js/jquery_popup.js}"></script>
 </body>
 <script>
-    $("#onclick").click(function() {
+    $("#onclick").click(function () {
         $("#contact").css("display", "block");
     });
 </script>

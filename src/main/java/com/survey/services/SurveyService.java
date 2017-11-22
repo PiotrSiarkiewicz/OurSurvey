@@ -79,7 +79,6 @@ public class SurveyService
     public void prepareSurveyAndUserToSave( Survey survey, User user )
     {
         List<User> users = new ArrayList<>();
-        survey.setEditable( true );
         user.getSurveys().add( survey );
         users.add( user );
         survey.setUsers( users );

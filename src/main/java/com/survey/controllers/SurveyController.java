@@ -6,13 +6,14 @@ import com.survey.repository.UserRepository;
 import com.survey.services.SurveyService;
 import com.survey.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -42,12 +43,19 @@ public class SurveyController
 
 
     @RequestMapping( value = "/surveys", method = RequestMethod.GET )
-    public String main( Model model, Survey survey )
+    public String main(
+                    Model model,
+                    Survey survey,
+                    @ModelAttribute( "shared" ) final Object shared,
+                    @ModelAttribute( "shareMessage" ) final Object shareMessage, UsernameForm username )
     {
         List<Survey> surveys = surveyService.getSurveysFromLoggedUser();
-
+        model.addAttribute( "loggedUser", surveyService.getLoggedUser().getUsername() );
+        model.addAttribute( "shareMessage", shareMessage );
+        model.addAttribute( "shared", shared );
         model.addAttribute( "surveys", surveys );
         model.addAttribute( "survey", survey );
+        model.addAttribute( "username", username );
         return "surveys";
     }
 
@@ -67,10 +75,50 @@ public class SurveyController
                     @Valid Survey survey )
     {
         User user = surveyService.getLoggedUser();
+        survey.setCreator( user.getUsername() );
         surveyService.prepareSurveyAndUserToSave( survey, user );
         surveyRepository.save( survey );
         userDetailsService.saveUser( user );
         return new ModelAndView( "redirect:/surveys" );
+    }
+
+
+    @RequestMapping( value = "/surveys/share/{surveyId}", method = RequestMethod.POST )
+    public ModelAndView share( @PathVariable Long surveyId, UsernameForm username, RedirectAttributes model )
+    {
+        Survey survey = surveyRepository.findSurveyById( surveyId );
+        Optional<User> user = userRepository.findByUsername( username.getUsername() );
+        if( user.isPresent() )
+        {
+            surveyService.prepareSurveyAndUserToSave( survey, user.get() );
+            surveyRepository.save( survey );
+            userDetailsService.saveUser( user.get() );
+            model.addFlashAttribute( "shared", "complete" );
+            model.addFlashAttribute( "shareMessage", "Share complete!" );
+        }
+        else
+        {
+            model.addFlashAttribute( "shared", "error" );
+            model.addFlashAttribute( "shareMessage", "There is no user with this username!" );
+        }
+
+        return new ModelAndView( "redirect:/surveys" );
+    }
+}
+
+class UsernameForm
+{
+    private String username;
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+
+    public void setUsername( String username )
+    {
+        this.username = username;
     }
 }
 

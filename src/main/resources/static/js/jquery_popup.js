@@ -1,10 +1,13 @@
 $(document).ready(function () {
     $("#onclick").click(function () {
-        debugger;
+
+        $("#contact").css("display", "block");
         $("#contactdiv").css("display", "block");
     });
     $("#cancel").click(function () {
+
         $(this).parent().parent().hide();
+        $(this).parent().parent().parent().hide();
     });
 // Contact form popup send-button click event.
     $("#create").click(function () {
@@ -13,7 +16,5 @@ $(document).ready(function () {
         if (name == "" || desc == "") {
             alert("Please Fill All Fields");
         }
-
     });
-
 });
