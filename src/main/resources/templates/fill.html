@@ -29,7 +29,7 @@
                             <li th:text="${answer.text}" th:class="${answer.id}"></li>
                             <input th:if="${answer.type} == 'text'" type="text" th:id="${answer.id}" class="text">
                             <label class="custom-file" th:if="${answer.type} == 'image'" >
-                                <input type="file" th:id="${answer.id}" class="image" >
+                                <input type="file" th:id="${answer.id}" class="image" accept="image/*">
                                 <span class="custom-file-control"></span>
                             </label>
                         </div>
