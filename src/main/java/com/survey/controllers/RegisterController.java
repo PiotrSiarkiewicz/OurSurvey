@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
-
 
 @Controller
 public class RegisterController
@@ -89,7 +86,7 @@ public class RegisterController
     public ModelAndView showConfirmationPage( ModelAndView modelAndView, @RequestParam( "token" ) String token )
     {
         User user = userService.findByConfirmationToken( token );
-        registerValidator.checkToken( modelAndView, user );
+        registerValidator.checkTokenAndSetMessage( modelAndView, user );
 
         modelAndView.setViewName( "confirm" );
         return modelAndView;

@@ -17,6 +17,7 @@ form {
 .checkbox {
     display: inline;
 }
+form.btn-group + form.btn-group {margin-left: -5px;}
 
 .rectangle-list li {
     position: relative;
@@ -77,7 +78,7 @@ ol {
 }
 
 ol ol {
-    margin: 0 0 0 2em; /* Add some left margin for inner lists */
+    margin: 0 0 0 2em;
 
 }
 
@@ -91,4 +92,8 @@ td {
 }
 td{
     font-size: large;
+}
+img {
+    width: 30%;
+    height: auto;
 }

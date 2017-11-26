@@ -17,6 +17,9 @@
     <div class="vertical-center">
         <div class="container container-table">
             <div class="col-md-12  well well-lg">
+                <form th:action="@{/surveys}"  method="get" >
+                    <input type="submit" class="btn btn-primary btn-block text-center" value="back"/>
+                </form>
                 <h2 class="text-center" th:text= "${'Results for ' + survey.name}"></h2>
                 <table cellspacing="20">
                     <tr>

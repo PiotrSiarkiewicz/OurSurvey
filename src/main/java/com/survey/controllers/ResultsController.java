@@ -24,8 +24,9 @@ public class ResultsController
     private Survey survey;
     private List<ResultData> resultDatas;
 
+
     @Autowired
-    public ResultsController( SurveyRepository surveyRepository,ResultRepository resultRepository )
+    public ResultsController( SurveyRepository surveyRepository, ResultRepository resultRepository )
     {
         this.surveyRepository = surveyRepository;
         this.resultRepository = resultRepository;
@@ -45,24 +46,40 @@ public class ResultsController
     public String showResultData( Model model, @PathVariable Long resultId )
     {
         Result result = resultRepository.findResultById( resultId );
+
         List<QuestionLite> questionLiteList = new ArrayList<>();
+        ResultLite resultLite;
         resultDatas = result.getResultDatas();
-        for( Question question:
-             survey.getQuestions())
+        for( Question question :
+                        survey.getQuestions() )
         {
             QuestionLite questionLite = new QuestionLite( question );
 
             for( ResultData resultData :
-                            resultDatas)
+                            resultDatas )
             {
-                if(resultData.getQuestion_id().equals( question.getId() ) )
+                if(resultData.getImage() != null)
                 {
-                    questionLite.getResultDatas().add( resultData );
+                    byte[] byte64 = Base64.getEncoder().encode( resultData.getImage());
+                    String base64Encoded = new String(byte64);
+                    resultLite = new ResultLite( resultData.getQuestion_id(), null, resultData.getText(),
+                                    base64Encoded );
+                }
+                else
+                {
+                    resultLite = new ResultLite( resultData.getQuestion_id(), null, resultData.getText(),
+                                    null );
+                }
+
+                if( resultData.getQuestion_id().equals( question.getId() ) )
+                {
+                    questionLite.getResultDatas().add( resultLite );
                 }
             }
-            questionLiteList.add(questionLite);
+            questionLiteList.add( questionLite );
         }
         model.addAttribute( "questions", questionLiteList );
+        model.addAttribute( "surveyId", survey.getId() );
         return "show_result_data";
     }
 
@@ -71,23 +88,6 @@ public class ResultsController
     public String deleteResult( Model model, @PathVariable Long resultId )
     {
         resultRepository.delete( resultId );
-        return "redirect:/surveys/results/"+survey.getId();
-    }
-
-    @RequestMapping( value = "/surveys/results/displayImage/{resultDataId}")
-    public String returnImage( Model model, @PathVariable Long resultDataId)
-    {
-        byte[] imageArray = new byte[0];
-        for( ResultData resultData :
-                        resultDatas )
-        {
-            if( resultData.getId().equals( resultDataId ) )
-            {
-                imageArray = resultData.getImage();
-            }
-        }
-        byte[] byte64 = Base64.getEncoder().encode( imageArray );
-        String base64Encoded = new String(byte64);
-        return base64Encoded;
+        return "redirect:/surveys/results/" + survey.getId();
     }
 }

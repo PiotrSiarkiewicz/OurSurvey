@@ -8,14 +8,27 @@ public class ResultLite
     private Long questionId;
     private Long answerId;
     private String text;
+    private String image;
 
 
+    public String getImage()
+    {
+        return image;
+    }
 
-    public ResultLite( Long questionId, Long answerId, String text )
+
+    public void setImage( String image )
+    {
+        this.image = image;
+    }
+
+
+    public ResultLite( Long questionId, Long answerId, String text, String image )
     {
         this.questionId = questionId;
         this.answerId = answerId;
         this.text = text;
+        this.image = image;
     }
 
 

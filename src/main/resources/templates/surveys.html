@@ -15,8 +15,8 @@
     <input type="submit" value="Sign Out" class="btn btn-primary pull-right"/>
 </form>
 <div class="vertical-center">
-    <div class="middle-box text-center container container-table ">
-        <div class="col-md-12  well well-lg">
+    <div class=" text-center container container-table col-lg-10">
+        <div class=" well well-lg">
             <h2>Documents</h2>
             <div th:if="${shared} == 'complete'" class="alert alert-success"
                  role="alert" th:text="${shareMessage}"></div>
@@ -32,16 +32,16 @@
                     <th>&nbsp;</th>
                 </tr>
                 <tr th:each="survey : ${surveys}">
-                    <td>
+                    <td class="col-lg-2">
                         <p th:text="${survey.name}"></p>
                     </td>
-                    <td>
+                    <td class="col-lg-3">
                         <p th:text="${survey.description}"></p>
                     </td>
-                    <td>
+                    <td class="col-lg-3">
                         <p th:text="${survey.creationDate}"></p>
                     </td>
-                    <td class="input-group pull-right">
+                    <td class="form-group  col-lg-4" >
                         <form th:action="@{/surveys/fill/} + ${survey.id}" method="post">
                             <input type="submit" class="btn btn-primary btn-block" value="fill" name="surveyId"/>
                         </form>
@@ -55,7 +55,7 @@
                         </form>
                         <form th:action="@{/surveys/share/} + ${survey.id}" th:object="${username}" method="post">
                             <input type="text" class="form-control" th:field="*{username}" name="surveyId"
-                                   th:disabled="${loggedUser != survey.creator}?true"/>
+                                   th:disabled="${loggedUser != survey.creator}?true" style="size: 2%" placeholder="username"/>
                             <input type="submit" class="btn btn-info btn-block" value="share"
                                    th:disabled="${loggedUser != survey.creator}?true"/>
                         </form>
@@ -89,9 +89,4 @@
 <script type="application/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
 <script type="application/javascript" th:src="@{/js/jquery_popup.js}"></script>
 </body>
-<script>
-    $("#onclick").click(function () {
-        $("#contact").css("display", "block");
-    });
-</script>
 </html>

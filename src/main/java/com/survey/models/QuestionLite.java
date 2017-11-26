@@ -7,7 +7,7 @@ import java.util.List;
 public class QuestionLite
 {
     private Question question;
-    private List<ResultData> resultDatas;
+    private List<ResultLite> resultDatas;
 
 
     public QuestionLite( Question question )
@@ -29,13 +29,13 @@ public class QuestionLite
     }
 
 
-    public List<ResultData> getResultDatas()
+    public List<ResultLite> getResultDatas()
     {
         return resultDatas;
     }
 
 
-    public void setResultDatas( List<ResultData> resultDatas )
+    public void setResultDatas( List<ResultLite> resultDatas )
     {
         this.resultDatas = resultDatas;
     }

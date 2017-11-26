@@ -15,6 +15,9 @@
     <div class="vertical-center">
         <div class="middle-box  container container-table ">
             <div class="col-md-12  well well-lg">
+                <form th:action="@{/surveys/results/} + ${surveyId}"  method="get" >
+                    <input type="submit" class="btn btn-primary btn-block text-center" value="back"/>
+                </form>
                 <h2 class="text-center">Result data</h2>
                 <ol class="rectangle-list">
 
@@ -25,10 +28,10 @@
                                 <div></div>
                                     <li  th:text="${resultData.text}" th:if="${resultData.text != 'image'}"></li>
                                 </di>
-                                <!--<div th:if="${resultData.text == 'image'}">-->
-                                    <!--<img th:src="@{/surveys/results/displayImage/} + ${resultData.id}">-->
+                                <div th:if="${resultData.text == 'image'}">
+                                    <img th:src="'data:image/png;base64,' + ${resultData.image}">
 
-                                <!--</di>-->
+                                </di>
                             </div>
                         </ol>
                     </div>
@@ -39,14 +42,4 @@
 </div>
 <script type="application/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
 </body>
-<script>
-    $(document).ready(function () {
-
-        $("#image").click(function () {
-            var image = $("#image2").val();
-            debugger;
-            document.getElementById(this).src = "data:image/png;base64," + image;
-        })
-    });
-</script>
 </html>

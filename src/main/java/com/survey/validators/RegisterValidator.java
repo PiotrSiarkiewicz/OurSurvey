@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class RegisterValidator
 {
-    public void checkToken( ModelAndView modelAndView, User user )
+    public void checkTokenAndSetMessage( ModelAndView modelAndView, User user )
     {
         if( user == null )
         {
